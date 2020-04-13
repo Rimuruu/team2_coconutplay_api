@@ -1,4 +1,4 @@
-# Pitaya Play
+# Pitaya Play API
 
 Exercice pratique du cours 8
 
@@ -17,11 +17,11 @@ npm install
 Pour lancer l'application vous devrez utiliser la commande suivante :
 
 ```
-npm run serve
+npm run start
 ```
 
 Puis, vous rendre à l'adresse suivante :
 
 ```
-http:/localhost:8080
+http:/localhost:3000
 ```
