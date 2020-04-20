@@ -3,9 +3,33 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import routes from './router.js'
 import game from "./model/game"
-
+import instanciate from './database.js'
 const app = express();
 const PORT = 3000;
+
+instanciate();
+var mongoose = require('mongoose');
+
+var Schema = mongoose.Schema;
+var AccountSchema = new Schema({
+  name: {
+      type: String,
+      required : 'Enter name.'
+  },
+  password: {
+    type: String,
+    required : 'Enter password.'
+},
+  created:{
+      type : Date,
+      default : Date.now
+  },
+
+
+}, {versionKey: false});
+module.exports = mongoose.model('Account', AccountSchema);
+
+
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -34,3 +58,4 @@ game.generate()
   .catch(() => {
     console.log("Error to generate default game test.")
   });
+
