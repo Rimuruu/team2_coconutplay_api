@@ -2,32 +2,14 @@ import express from "express"
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import routes from './router.js'
+import routesDatabase from './routerDatabase.js'
 import game from "./model/game"
 import instanciate from './database.js'
 const app = express();
 const PORT = 3000;
 
 instanciate();
-var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
-var AccountSchema = new Schema({
-  name: {
-      type: String,
-      required : 'Enter name.'
-  },
-  password: {
-    type: String,
-    required : 'Enter password.'
-},
-  created:{
-      type : Date,
-      default : Date.now
-  },
-
-
-}, {versionKey: false});
-module.exports = mongoose.model('Account', AccountSchema);
 
 
 
@@ -41,7 +23,9 @@ app.get('/', (req, res) => {
 });
 
 //Inject the different routes availables
+routesDatabase(app);
 routes(app);
+
 
 // If the route doesn't exist, send 404 error
 app.use((req, res) => {
