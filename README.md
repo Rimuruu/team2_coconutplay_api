@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Pitaya Play API
 
 Exercice pratique du cours 8
@@ -25,3 +26,7 @@ Puis, vous rendre à l'adresse suivante :
 ```
 http:/localhost:3000
 ```
+=======
+# team2_ coconutplay _api 
+
+>>>>>>> ce699a0866555f6a0e872481e5c4cf4af8c9916f
