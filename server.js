@@ -5,6 +5,8 @@ import routes from './router.js'
 import routesDatabase from './routerDatabase.js'
 import game from "./model/game"
 import instanciate from './database.js'
+
+
 const app = express();
 const PORT = 3000;
 

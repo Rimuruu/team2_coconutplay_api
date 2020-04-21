@@ -3,7 +3,10 @@ const routesDatabase = (app)=>{
 
     app.route('/register')
         .post(account.addAccount)
-        .get(account.searchAccount);
+
+    
+    app.route('/login')
+        .get(account.loginIn);
 }
 
 export default routesDatabase;
