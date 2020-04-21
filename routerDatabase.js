@@ -6,7 +6,9 @@ const routesDatabase = (app)=>{
 
     
     app.route('/login')
-        .get(account.loginIn);
-}
+        .get(account.loginIn)
 
+    app.route('/profile/me')
+        .get(account.profileMe)
+}
 export default routesDatabase;

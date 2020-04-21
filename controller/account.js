@@ -4,7 +4,8 @@ const JWT_SECRET = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
 
 // Connexion à un compte
 export function loginIn(req,res){
-    Account.find({username: req.body.username, password : req.body.password }).then(function(account){
+    console.log(req.headers);
+    Account.find({username: req.headers.username, password : req.headers.password }).then(function(account){
         if(account.length > 0){
             console.log("Compte existe");
             const payload = {
@@ -35,31 +36,53 @@ export function loginIn(req,res){
 }
 
 //Recherche d'un compte existant
-export function searchAccount(req,res){
-    Account.find({username: req.body.username, password : req.body.password }).then(function(account){
-        if(account.length > 0){
-            console.log("Compte existe");
-            res.status(200).json(account);
+export function profileMe(req,res){
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+
+    if(!authHeader){
+        res.status(403).send('Unauthorized no Header');
+        return
+    }
+
+    const authType = authHeader.split(" ")[0];
+    const authToken = authHeader.split(" ")[1];
+    if(authType != "Bearer"){
+        res.status(403).send('Unauthorized not Bearer');
+        return;
+    }
+
+    jwt.verify(authToken, JWT_SECRET, (err, decoded) => {
+        if(err){
+            res.status(403).send('Unauthorized err');
+            return;
         }
-        else{
-            console.log("Compte existe pas");
-            res.status(404).json(false);
+        Account.find({username: req.headers.username, password : req.headers.password }).then(function(account){
+            if(account.length > 0){
+                console.log("Compte existe");
+                res.status(200).json(account);
             }
-    }).catch(function(err){
-        throw err;
+            else{
+                console.log("Compte existe pas");
+                res.status(404).json(false);
+                }
+        }).catch(function(err){
+            throw err;
+        })
     })
+
+   
 }
 
 //Inscription d'un compte
 export function addAccount(req,res){
-    Account.find({$or:[{username: req.body.username},{ password : req.body.password }]}).then(function(account){
+    Account.find({$or:[{username: req.headers.username},{ password : req.headers.password }]}).then(function(account){
         if(account.length > 0){
             console.log("Compte existant");
             res.status(403).json(false);
         }
         else{
             console.log("Compte créé");
-            var newAccount = new Account(req.body);
+            var newAccount = new Account(req.headers);
             newAccount.save().then(function(accountCreated){
                 
                 const payload = {
@@ -84,3 +107,7 @@ export function addAccount(req,res){
     })
    
 }
+
+
+
+
