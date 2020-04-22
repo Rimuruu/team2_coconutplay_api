@@ -1,5 +1,5 @@
-import {Account } from "../model/account.js"
-import jwt from 'jsonwebtoken'
+import {Account, Token } from "../model/account.js"
+import jwt, { decode } from 'jsonwebtoken'
 const JWT_SECRET = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
 
 // Connexion à un compte
@@ -35,8 +35,10 @@ export function loginIn(req,res){
     })
 }
 
-//Recherche d'un compte existant
-export function profileMe(req,res){
+
+
+
+export function logout (req,res){
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
     if(!authHeader){
@@ -56,19 +58,55 @@ export function profileMe(req,res){
             res.status(403).send('Unauthorized err');
             return;
         }
-        Account.find({username: req.headers.username, password : req.headers.password }).then(function(account){
-            if(account.length > 0){
-                console.log("Compte existe");
-                res.status(200).json(account);
-            }
-            else{
-                console.log("Compte existe pas");
-                res.status(404).json(false);
-                }
-        }).catch(function(err){
-            throw err;
+        var blacklistedToken = new Token({token:authToken});
+        blacklistedToken.save().then(function(token){
+            res.send('Logout'); 
         })
+       
+       
     })
+
+
+
+
+
+}
+
+
+//Recherche d'un compte existant
+export function profileMe(req,res){
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+
+    if(!authHeader){
+        res.status(403).send('Unauthorized no Header');
+        return
+    }
+
+    const authType = authHeader.split(" ")[0];
+    const authToken = authHeader.split(" ")[1];
+    if(authType != "Bearer"){
+        res.status(403).send('Unauthorized not Bearer');
+        return;
+    }
+
+    Token.find({token : authToken}).then(function(token){
+        if(token.length <= 0){
+            jwt.verify(authToken, JWT_SECRET, (err, decoded) => {
+                if(err){
+                    res.status(403).send('Unauthorized err');
+                    return;
+                }
+               res.status(200).send(decoded);
+            })
+        }
+        else{
+            res.status(403).send('Token invalidate');
+        }
+    }).catch(function(err){
+        throw err;
+    })
+
+   
 
    
 }

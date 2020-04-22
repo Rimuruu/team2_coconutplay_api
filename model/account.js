@@ -18,19 +18,15 @@ export var AccountSchema = new Schema({
   },
   name: {
     type: String,
-    required : 'Enter surname.'
+    required : 'Enter name.'
   },
   surname: {
     type: String,
     required : 'Enter surname.'
   },
-  email: {
-    type: String,
-    required : 'Enter email.'
-  },
   role: {
     type: String,
-    required : 'Enter email.'
+    required : 'Enter role.'
   },
   created:{
       type : Date,
@@ -38,7 +34,16 @@ export var AccountSchema = new Schema({
   },
 
 
-}, {versionKey: false});
+}, {versionKey: false})
+
+export var TokenSchema = new Schema({
+    token : {
+      type: String,
+      required : 'Enter a Token'
+    }
+
+})
 
 export var Account = mongoose.model('account', AccountSchema);
+export var Token = mongoose.model('token', TokenSchema);
 

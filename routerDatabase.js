@@ -8,6 +8,9 @@ const routesDatabase = (app)=>{
     app.route('/login')
         .get(account.loginIn)
 
+    app.route('/logout')
+        .get(account.logout)
+
     app.route('/profile/me')
         .get(account.profileMe)
 }
