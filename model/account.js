@@ -18,11 +18,11 @@ export var AccountSchema = new Schema({
   },
   name: {
     type: String,
-    required : 'Enter name.'
+  
   },
   surname: {
     type: String,
-    required : 'Enter surname.'
+
   },
   role: {
     type: String,

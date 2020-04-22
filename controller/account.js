@@ -22,6 +22,7 @@ export function loginIn(req,res){
                     res.status(500).send("error");
                     return;
                 }
+                console.log("LoginIn");
                 res.send(token);
             })
          
