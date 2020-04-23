@@ -24,6 +24,10 @@ export var AccountSchema = new Schema({
     type: String,
 
   },
+  birthdate: {
+    type: Date,
+
+  },
   role: {
     type: String,
     required : 'Enter role.'

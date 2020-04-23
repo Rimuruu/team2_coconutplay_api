@@ -14,6 +14,7 @@ export function loginIn(req,res){
                 role : account[0].role,
                 name : account[0].name,
                 surname : account[0].surname,
+                birthdate : account[0].birthdate,
              
             }
             jwt.sign(payload,JWT_SECRET,{expiresIn: 600},(err,token)=> {
@@ -133,6 +134,7 @@ export function addAccount(req,res){
                     role : accountCreated.role,
                     name : accountCreated.name,
                     surname : accountCreated.surname,
+                    birthdate:accountCreated.birthdate,
                  
                 }
                 jwt.sign(payload,JWT_SECRET,{expiresIn: 120},(err,token)=> {
