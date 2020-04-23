@@ -16,14 +16,14 @@ export function loginIn(req,res){
                 surname : account[0].surname,
              
             }
-            jwt.sign(payload,JWT_SECRET,{expiresIn: 120},(err,token)=> {
+            jwt.sign(payload,JWT_SECRET,{expiresIn: 600},(err,token)=> {
                 if(err){
                     console.log(err);
                     res.status(500).send("error");
                     return;
                 }
                 console.log("LoginIn");
-                res.send(token);
+                res.status(200).send(token);
             })
          
         }
@@ -43,6 +43,7 @@ export function logout (req,res){
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
     if(!authHeader){
+       console.log("header")
         res.status(403).send('Unauthorized no Header');
         return
     }
@@ -50,12 +51,14 @@ export function logout (req,res){
     const authType = authHeader.split(" ")[0];
     const authToken = authHeader.split(" ")[1];
     if(authType != "Bearer"){
+        console.log("bearer")
         res.status(403).send('Unauthorized not Bearer');
         return;
     }
 
     jwt.verify(authToken, JWT_SECRET, (err, decoded) => {
         if(err){
+            console.log("verify")
             res.status(403).send('Unauthorized err');
             return;
         }
