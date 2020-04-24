@@ -13,5 +13,8 @@ const routesDatabase = (app)=>{
 
     app.route('/profile/me')
         .get(account.profileMe)
+
+    app.route('/profile/:user')
+        .put(account.modifyRole)
 }
 export default routesDatabase;

@@ -24,7 +24,7 @@ export function loginIn(req,res){
                     return;
                 }
                 console.log("LoginIn");
-                res.status(200).send(token);
+                res.status(200).send({token:token,role:account[0].role});
             })
          
         }
@@ -39,7 +39,7 @@ export function loginIn(req,res){
 
 
 
-
+//Déconnexion
 export function logout (req,res){
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
@@ -78,7 +78,7 @@ export function logout (req,res){
 }
 
 
-//Recherche d'un compte existant
+//Profile de l'utilisateur
 export function profileMe(req,res){
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
@@ -143,7 +143,7 @@ export function addAccount(req,res){
                         res.status(500).send("error");
                         return;
                     }
-                    res.send(token);
+                    res.send({token:token,role:accountCreated.role});
                 })
             })}
     }).catch(function(err){
@@ -153,5 +153,48 @@ export function addAccount(req,res){
 }
 
 
+//Modifier le role d'un utilisateur
+export function modifyRole(req,res){
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
+    if(!authHeader){
+        res.status(403).send('Unauthorized no Header');
+        return
+    }
 
+    const authType = authHeader.split(" ")[0];
+    const authToken = authHeader.split(" ")[1];
+    if(authType != "Bearer"){
+        res.status(403).send('Unauthorized not Bearer');
+        return;
+    }
+
+    Token.find({token : authToken}).then(function(token){
+        if(token.length <= 0){
+            jwt.verify(authToken, JWT_SECRET, (err, decoded) => {
+                if(err){
+                    res.status(403).send('Unauthorized err');
+                    return;
+                }
+                else if(decoded.role != "admin"){
+                    res.status(403).send('Unauthorized no admin');
+                    return;
+                }
+                Account.findOneAndUpdate({username:req.params.user},{role:req.headers.role},{new:true,upsert:true}).then(function(account){
+                    if(account === null){
+                        res.status(404).send('Compte existe pas');
+                    }
+                    res.status(200).send(true);
+                }).catch(function(err){
+                    console.log(err);
+                })
+
+            })
+        }
+        else{
+            res.status(403).send('Token invalidate');
+        }
+    }).catch(function(err){
+        throw err;
+    })
+}
