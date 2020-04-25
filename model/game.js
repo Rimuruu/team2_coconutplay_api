@@ -45,7 +45,7 @@ let list = [];
 
 const generate = async () => {
   if (list.length <= 0) {
-    //list = await generator.generate();
+    list = await generator.generate();
   }
 }
 
