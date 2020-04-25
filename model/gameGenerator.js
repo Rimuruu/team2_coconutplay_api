@@ -120,7 +120,7 @@ const generateImages = async () => {
   try {
     response = await Axios.get("https://picsum.photos/v2/list");
   } catch(e) {
-    throw "ERROR - get picsum image list"
+    throw "ERROR - get picsum image list";
   }
 
   banners = response.data;

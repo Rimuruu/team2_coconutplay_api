@@ -3,6 +3,7 @@ import Game from "../model/game"
 import Category from "../model/category"
 
 export function getGames(req, res) {
+  Game.refresh();
   res.send(new SuccessCustomResponse( 200, "Games list received.", Game.all() ));
 }
 
