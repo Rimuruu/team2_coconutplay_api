@@ -3,7 +3,6 @@ import Game from "../model/game"
 import Category from "../model/category"
 
 export function getGames(req, res) {
-  Game.refresh();
   res.send(new SuccessCustomResponse( 200, "Games list received.", Game.all() ));
 }
 
@@ -47,7 +46,7 @@ export function putGame(req, res) {
     );
     return;
   }
-
+  console.log(req.body);
   const gameCreated = Game.create(req.body);
   res.send(gameCreated)
 }

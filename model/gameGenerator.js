@@ -100,6 +100,7 @@ const get = id => ({
   category: null,
   content: defaultContent,
   createdDate: new Date(`December ${fixIndex(id + 1, 30)}, 2019 12:00:00`),
+  visibility:"public"
 });
 
 const getList = (count, category) => {

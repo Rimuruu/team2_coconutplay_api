@@ -180,7 +180,7 @@ export function modifyRole(req,res){
                     res.status(403).send('Unauthorized no admin');
                     return;
                 }
-                Account.findOneAndUpdate({username:req.params.user},{role:req.headers.role},{new:true,upsert:true}).then(function(account){
+                Account.findOneAndUpdate({username:req.params.user},{role:req.data.role},{new:true,upsert:true}).then(function(account){
                     if(account === null){
                         res.status(404).send('Compte existe pas');
                     }
