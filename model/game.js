@@ -87,7 +87,7 @@ const create = ({title, author, bannerPath, name, grade, category, content}) => 
 
   var newGame = new Game({ title: title || "Default Title",
   author: author || "Default author",
-  bannerPath: bannerPath || generator.getDefaultImageUrl(count()),
+  bannerPath: bannerPath ,//|| generator.getDefaultImageUrl(count()),
   name: name || "Default Game",
   grade: grade || 0,
   category: category,
