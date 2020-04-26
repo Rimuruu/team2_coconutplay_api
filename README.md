@@ -1,7 +1,14 @@
 <<<<<<< HEAD
-# Pitaya Play API
+# Coconut Play
 
-Exercice pratique du cours 8
+Projet de Fin de session
+
+Antoine Renciot
+
+Rémi Barbier
+
+Romain Lechartier
+
 
 ### Installation
 
@@ -26,7 +33,15 @@ Puis, vous rendre à l'adresse suivante :
 ```
 http:/localhost:3000
 ```
-=======
-# team2_ coconutplay _api 
 
->>>>>>> ce699a0866555f6a0e872481e5c4cf4af8c9916f
+Un compte administrateur est créé au lancement de l'api pour modifié les rôles des nouveaux comptes.
+
+```
+username : admin
+
+password : admin
+```
+=======
+# team2_coconutplay_web
+
+>>>>>>> 7a37e673d91954f2d549a3121efda7ec3a32a141
