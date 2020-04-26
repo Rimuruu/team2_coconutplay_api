@@ -8,6 +8,9 @@ export var Schema = mongoose.Schema;
 
 export var CommentSchema = new Schema({
   gameId: {
+    type: Number
+},
+  gameId: {
       type: String
   },
   username: {
@@ -19,7 +22,7 @@ export var CommentSchema = new Schema({
   text: {
     type: String, 
   },
-  created:{
+  createdDate:{
       type : Date,
       default : Date.now
   }})
@@ -34,6 +37,15 @@ let list = [];
 const all = () => {
   return list;
 };
+
+const generate = () => {
+  Comment.find({}).then(function(comments){
+    for(let i = 0; i<comments.length; i++){
+      list.push(comments[i]);
+    }
+    
+  })
+}
 
 const allByGame = (gameId) => {
   return list.filter((x) => x.gameId === gameId);
@@ -55,12 +67,7 @@ const create = ({ gameId, username, email, text }) => {
 
   list.push(comment);
   
-  var newComment = new Comment({ 
-    gameId,
-    username: username || "Default Username",
-    email: email || "default@default.com",
-    text: text || "Default comment"
-});
+  var newComment = new Comment(comment);
 
   newComment.save().catch(function(err){
     throw err;
@@ -72,4 +79,5 @@ export default {
   all,
   allByGame,
   create,
+  generate,
 };

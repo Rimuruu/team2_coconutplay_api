@@ -4,10 +4,10 @@ const JWT_SECRET = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
 
 // Connexion à un compte
 export function loginIn(req,res){
-    console.log(req.headers);
+  
     Account.find({username: req.headers.username, password : req.headers.password }).then(function(account){
         if(account.length > 0){
-            console.log("Compte existe");
+          
             const payload = {
                 username : account[0].username,
                 email : account[0].email,
@@ -17,23 +17,23 @@ export function loginIn(req,res){
                 birthdate : account[0].birthdate,
              
             }
-            jwt.sign(payload,JWT_SECRET,{expiresIn: 600},(err,token)=> {
+            jwt.sign(payload,JWT_SECRET,{expiresIn: 600000},(err,token)=> {
                 if(err){
-                    console.log(err);
+             
                     res.status(500).send("error");
                     return;
                 }
-                console.log("LoginIn");
+            
                 res.status(200).send({token:token,role:account[0].role});
             })
          
         }
         else{
-            console.log("Compte existe pas");
+         
             res.status(404).json(false);
             }
     }).catch(function(err){
-        throw err;
+      
     })
 }
 
@@ -44,7 +44,7 @@ export function logout (req,res){
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
 
     if(!authHeader){
-       console.log("header")
+
         res.status(403).send('Unauthorized no Header');
         return
     }
@@ -52,14 +52,14 @@ export function logout (req,res){
     const authType = authHeader.split(" ")[0];
     const authToken = authHeader.split(" ")[1];
     if(authType != "Bearer"){
-        console.log("bearer")
+   
         res.status(403).send('Unauthorized not Bearer');
         return;
     }
 
     jwt.verify(authToken, JWT_SECRET, (err, decoded) => {
         if(err){
-            console.log("verify")
+      
             res.status(403).send('Unauthorized err');
             return;
         }
@@ -118,13 +118,13 @@ export function profileMe(req,res){
 
 //Inscription d'un compte
 export function addAccount(req,res){
-    Account.find({$or:[{username: req.headers.username},{ password : req.headers.password }]}).then(function(account){
+    Account.find({$or:[{username: req.headers.username},{ password : req.headers.password },{ email : req.headers.email }]}).then(function(account){
         if(account.length > 0){
-            console.log("Compte existant");
+         
             res.status(403).json(false);
         }
         else{
-            console.log("Compte créé");
+         
             var newAccount = new Account(req.headers);
             newAccount.save().then(function(accountCreated){
                 
@@ -139,7 +139,7 @@ export function addAccount(req,res){
                 }
                 jwt.sign(payload,JWT_SECRET,{expiresIn: 120},(err,token)=> {
                     if(err){
-                        console.log(err);
+                   
                         res.status(500).send("error");
                         return;
                     }
@@ -180,13 +180,18 @@ export function modifyRole(req,res){
                     res.status(403).send('Unauthorized no admin');
                     return;
                 }
-                Account.findOneAndUpdate({username:req.params.user},{role:req.data.role},{new:true,upsert:true}).then(function(account){
+        
+                Account.findOneAndUpdate({username:req.params.user},{role:req.body.role},{new:false,upsert:false}).then(function(account){
                     if(account === null){
+                
                         res.status(404).send('Compte existe pas');
+                        
                     }
-                    res.status(200).send(true);
+                    else{
+                        res.status(200).send(true);
+                    }
                 }).catch(function(err){
-                    console.log(err);
+        
                 })
 
             })
@@ -195,6 +200,6 @@ export function modifyRole(req,res){
             res.status(403).send('Token invalidate');
         }
     }).catch(function(err){
-        throw err;
+
     })
 }

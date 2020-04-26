@@ -98,7 +98,7 @@ const create = ({title, author, bannerPath, name, grade, category, content,visib
     visibility:visibility || 'public'
   }
   
-  console.log(game.bannerPath)
+
   list.push(game);
 
   var newGame = new Game(game);

@@ -1,5 +1,6 @@
 
 
+
 export var mongoose = require('mongoose');
 
 export var Schema = mongoose.Schema;
@@ -50,4 +51,15 @@ export var TokenSchema = new Schema({
 
 export var Account = mongoose.model('account', AccountSchema);
 export var Token = mongoose.model('token', TokenSchema);
+
+export var generateAdmin = () => {
+  Account.findOneAndUpdate({username:"admin",password:"admin",email:"admin@amin.com",role:"admin"},null,{upsert:true})
+    .then(function(result){
+    if(!result) result = new Account({username:"admin",password:"admin",email:"admin@amin.com",role:"admin"})
+    result.save()
+  })
+    .catch(function(err){
+  
+  })
+}
 

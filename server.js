@@ -4,6 +4,8 @@ import cors from 'cors'
 import routes from './router.js'
 import routesDatabase from './routerDatabase.js'
 import game from "./model/game"
+import comment from "./model/comment"
+import {generateAdmin}from "./model/account"
 import instanciate from './database.js'
 
 
@@ -43,3 +45,5 @@ game.generate()
     console.log("Error to generate default game test.")
   });
 
+comment.generate();
+generateAdmin();
