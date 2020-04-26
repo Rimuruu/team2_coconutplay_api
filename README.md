@@ -34,7 +34,7 @@ Puis, vous rendre à l'adresse suivante :
 http:/localhost:3000
 ```
 
-Un compte administrateur est créé au lancement de l'api pour modifié les rôles des nouveaux comptes.
+Un compte administrateur est créé au lancement de l'api pour modifier les rôles des nouveaux comptes.
 
 ```
 username : admin
