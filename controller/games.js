@@ -46,7 +46,7 @@ export function putGame(req, res) {
     );
     return;
   }
-  console.log(req.body);
+
   const gameCreated = Game.create(req.body);
   res.send(gameCreated)
 }
