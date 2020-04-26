@@ -101,17 +101,7 @@ const create = ({title, author, bannerPath, name, grade, category, content,visib
 
   list.push(game);
 
-<<<<<<< HEAD
   var newGame = new Game(game);
-=======
-  var newGame = new Game({ title: title || "Default Title",
-  author: author || "Default author",
-  bannerPath: bannerPath ,//|| generator.getDefaultImageUrl(count()),
-  name: name || "Default Game",
-  grade: grade || 0,
-  category: category,
-  content: content || "Default text",});
->>>>>>> 11ba49c59d6a0432c13aee8d4eb9fedaca948685
 
   newGame.save().catch(function(err){
     throw err;
