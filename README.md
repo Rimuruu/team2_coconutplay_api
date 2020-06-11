@@ -12,7 +12,7 @@ Romain Lechartier
 
 ### Installation
 
-Avant tous, il vous faudra installer les librairies dont aura besoin cette application web pour fonctionner.
+Avant tout, il vous faudra installer les librairies dont aura besoin cette application web pour fonctionner.
 
 Pour ce faire, executer la commande suivante :
 
